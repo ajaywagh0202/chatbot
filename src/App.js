@@ -1,15 +1,22 @@
-import React, { useState } from "react";
-import "./App.css";
-import Chat from "./components/Chat";
+// import React, { useState } from "react";
+// import "./App.css";
+// import Chat from "./components/Chat";
 
-function App() {
-  const [messages, setMessages] = useState([]);
+// function App() {
+//   const [messages, setMessages] = useState([]);
 
-  return (
-    <div className="app">
-      <Chat messages={messages} setMessages={setMessages} />
-    </div>
-  );
+//   return (
+//     <div className="app">
+//       <Chat messages={messages} setMessages={setMessages} />
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import React from "react";
+import RailGPTChat from "./components/RailGPTChat";
+
+export default function App() {
+  return <RailGPTChat />;
 }
-
-export default App;

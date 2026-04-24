@@ -120,6 +120,9 @@ const S = {
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "22px 22px 0 0",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: "#ffff",
   },
   chatHeaderText: {
     margin: 0,
@@ -495,7 +498,9 @@ function Message({ msg, onSuggestionClick, onFeedback }) {
     return (
       <div style={S.msgRowUser}>
         <div style={S.bubbleUser}>{msg.text}</div>
-        <div style={S.userAvatar}>👤</div>
+        <div style={S.userAvatar}>
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
       </div>
     );
   }
@@ -530,21 +535,6 @@ function Message({ msg, onSuggestionClick, onFeedback }) {
           </div>
         )}
         <div style={S.feedbackBar}>
-          <span style={{ fontSize: "0.7rem", color: "#8aaccc" }}>Was this helpful?</span>
-          <button
-            style={{ ...S.feedbackBtn, background: feedbackGiven && msg.feedback === true ? "#c8e6d9" : "transparent" }}
-            onClick={() => handleFeedback(true)}
-            disabled={feedbackGiven}
-          >
-            👍 Yes
-          </button>
-          <button
-            style={{ ...S.feedbackBtn, background: feedbackGiven && msg.feedback === false ? "#ffe0e0" : "transparent" }}
-            onClick={() => handleFeedback(false)}
-            disabled={feedbackGiven}
-          >
-            👎 No
-          </button>
         </div>
       </div>
     </div>
@@ -706,7 +696,6 @@ export default function RailGPTChat() {
             <div style={{ ...S.statusDot, background: health.status === "online" ? "#22c55e" : "#ef4444" }} />
             <span style={{ ...S.statusLabel, color: health.status === "online" ? "#22994a" : "#dc2626" }}>
               {health.status === "online" ? "Online" : "Offline"}
-              {health.cacheSize > 0 && ` • ${health.cacheSize} cached`}
             </span>
           </div>
         </div>
@@ -782,7 +771,7 @@ export default function RailGPTChat() {
                 ➤
               </button>
             </div>
-            <p style={S.inputHint}>Press Enter to send • Your feedback helps improve the AI</p>
+            <p style={S.inputHint}>Press Enter to send</p>
           </div>
         </div>
 

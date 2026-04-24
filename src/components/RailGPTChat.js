@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import logo from "../indian.png";
 
-// ── Inline styles object ──────────────────────────────────────
 const S = {
-  // Page
   page: {
     minHeight: "100vh",
     background: "linear-gradient(145deg, #1e3a4f 0%, #2a4f6a 40%, #1a3344 100%)",
@@ -15,8 +13,6 @@ const S = {
     gap: "16px",
     boxSizing: "border-box",
   },
-
-  // ── Header Card ──────────────────────────────────────────────
   headerCard: {
     width: "100%",
     maxWidth: "1700px",
@@ -29,24 +25,36 @@ const S = {
     boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
     flexShrink: 0,
   },
+  footerCard: {
+    width: "100%",
+    borderRadius: "16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+    color: "#e8f0f7",
+    padding: "12px",
+    background: "rgba(255,255,255,0.1)",
+  },
+  footerSub: {
+    margin: 0,
+    fontSize: "0.8rem",
+  },
   headerLeft: {
     display: "flex",
     alignItems: "center",
     gap: "14px",
   },
   logoCircle: {
-    width: "48px",
-    height: "48px",
+    width: "60px",
+    height: "60px",
     borderRadius: "50%",
     background: "#fff",
-    border: "2px solid #d0dce8",
+    border: "3px solid #d0dce8",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
-  },
-  logoText: {
-    fontSize: "22px",
   },
   headerTitle: {
     margin: 0,
@@ -66,7 +74,18 @@ const S = {
   headerRight: {
     display: "flex",
     alignItems: "center",
-    gap: "10px",
+    gap: "15px",
+  },
+  adminBtn: {
+    background: "#f0f4f9",
+    border: "1px solid #c8d8e8",
+    borderRadius: "20px",
+    padding: "6px 14px",
+    fontSize: "0.75rem",
+    fontWeight: "600",
+    color: "#1e4d73",
+    cursor: "pointer",
+    transition: "all 0.2s",
   },
   statusDot: {
     width: "8px",
@@ -81,15 +100,12 @@ const S = {
     color: "#22994a",
     fontWeight: "600",
   },
-
-
-  // ── Chat Card ────────────────────────────────────────────────
   chatCard: {
     width: "100%",
-    maxWidth: "1700px",
+    maxWidth: "1730px",
     flex: 1,
     background: "#f4f6f9",
-    borderRadius: "16px",
+    borderRadius: "22px",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
@@ -97,19 +113,13 @@ const S = {
     minHeight: "600px",
     maxHeight: "calc(100vh - 150px)",
   },
-
-  // Chat sub-header
   chatHeader: {
     background: "linear-gradient(90deg, #1a3a52 0%, #234f6e 100%)",
     padding: "12px 20px",
     display: "flex",
     alignItems: "center",
-    gap: "10px",
-    borderRadius: "16px 16px 0 0",
-    borderColor: "#ffffff",
-  },
-  chatHeaderIcon: {
-    fontSize: "18px",
+    justifyContent: "space-between",
+    borderRadius: "22px 22px 0 0",
   },
   chatHeaderText: {
     margin: 0,
@@ -117,13 +127,6 @@ const S = {
     fontSize: "0.9rem",
     fontWeight: "600",
   },
-  chatHeaderSub: {
-    margin: 0,
-    color: "#7aaccf",
-    fontSize: "0.72rem",
-  },
-
-  // Messages area
   messagesArea: {
     flex: 1,
     overflowY: "auto",
@@ -132,8 +135,6 @@ const S = {
     flexDirection: "column",
     gap: "16px",
   },
-
-  // ── Empty / welcome state ────────────────────────────────────
   emptyState: {
     flex: 1,
     display: "flex",
@@ -142,10 +143,6 @@ const S = {
     justifyContent: "center",
     gap: "10px",
     padding: "40px 20px",
-  },
-  emptyIcon: {
-    fontSize: "52px",
-    marginBottom: "4px",
   },
   emptyTitle: {
     margin: 0,
@@ -182,8 +179,6 @@ const S = {
     lineHeight: "1.4",
     transition: "border-color 0.15s, background 0.15s",
   },
-
-  // ── Message rows ─────────────────────────────────────────────
   msgRowUser: {
     display: "flex",
     justifyContent: "flex-end",
@@ -216,8 +211,9 @@ const S = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "14px",
     flexShrink: 0,
+    color: "#fff",
+    fontSize: "14px",
   },
   bubbleUser: {
     background: "linear-gradient(135deg, #1e4d73 0%, #2563a8 100%)",
@@ -241,8 +237,6 @@ const S = {
     boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
     border: "1px solid #e2eaf2",
   },
-
-  // Bot bubble internals
   botPara: {
     margin: "0 0 8px 0",
     color: "#2d4a60",
@@ -271,8 +265,6 @@ const S = {
     flexShrink: 0,
     marginTop: "1px",
   },
-
-  // Sources
   sourcesBar: {
     marginTop: "10px",
     paddingTop: "8px",
@@ -297,8 +289,43 @@ const S = {
     fontSize: "0.72rem",
     fontWeight: "600",
   },
-
-  // Typing indicator
+  suggestionsBlock: {
+    marginTop: "12px",
+    paddingTop: "8px",
+    borderTop: "1px solid #e2eaf2",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "8px",
+  },
+  suggestionChipSmall: {
+    background: "#f0f4f9",
+    border: "1px solid #c8d8e8",
+    borderRadius: "20px",
+    padding: "6px 12px",
+    fontSize: "0.75rem",
+    color: "#1e4d73",
+    cursor: "pointer",
+    transition: "all 0.2s",
+    fontWeight: "500",
+  },
+  feedbackBar: {
+    marginTop: "10px",
+    paddingTop: "8px",
+    borderTop: "1px solid #e2eaf2",
+    display: "flex",
+    gap: "10px",
+    alignItems: "center",
+  },
+  feedbackBtn: {
+    background: "transparent",
+    border: "1px solid #c8d8e8",
+    borderRadius: "15px",
+    padding: "4px 10px",
+    fontSize: "0.7rem",
+    cursor: "pointer",
+    color: "#5a7a96",
+    transition: "all 0.2s",
+  },
   typingBubble: {
     background: "#ffffff",
     border: "1px solid #e2eaf2",
@@ -317,8 +344,6 @@ const S = {
     background: "#2563a8",
     opacity: 0.6,
   },
-
-  // ── Input bar ────────────────────────────────────────────────
   inputBar: {
     padding: "14px 16px",
     background: "#eef1f6",
@@ -371,15 +396,15 @@ const S = {
   },
 };
 
-// ── Suggested questions ───────────────────────────────────────
-const SUGGESTIONS = [
-  "What is the leave policy for railway employees?",
-  "Explain the process of railway budget allocation",
-  "What are the inspection rules for station accounts?",
-  "How is freight traffic managed on Indian Railways?",
-];
+function renderInline(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((p, i) =>
+    p.startsWith("**") && p.endsWith("**")
+      ? <strong key={i} style={{ color: "#1a3a52", fontWeight: "600" }}>{p.slice(2, -2)}</strong>
+      : p
+  );
+}
 
-// ── Format bot response text ──────────────────────────────────
 function BotContent({ text }) {
   const blocks = text.split(/\n{2,}/);
   return (
@@ -388,7 +413,7 @@ function BotContent({ text }) {
         const lines = block.split("\n").map(l => l.trim()).filter(Boolean);
         if (!lines.length) return null;
 
-        const isBullet   = lines.every(l => /^[-•*]\s/.test(l));
+        const isBullet = lines.every(l => /^[-•*]\s/.test(l));
         const isNumbered = lines.every(l => /^\d+[.)]\s/.test(l));
 
         if (isBullet || isNumbered) {
@@ -396,7 +421,7 @@ function BotContent({ text }) {
             <ul key={bi} style={S.botList}>
               {lines.map((l, li) => {
                 const clean = l.replace(/^([-•*]|\d+[.)]) /, "");
-                const num   = isNumbered ? l.match(/^\d+/)?.[0] : null;
+                const num = isNumbered ? l.match(/^\d+/)?.[0] : null;
                 return (
                   <li key={li} style={S.botListItem}>
                     <span style={S.listBullet}>{num ? `${num}.` : "▸"}</span>
@@ -436,20 +461,12 @@ function BotContent({ text }) {
   );
 }
 
-function renderInline(text) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((p, i) =>
-    p.startsWith("**") && p.endsWith("**")
-      ? <strong key={i} style={{ color: "#1a3a52", fontWeight: "600" }}>{p.slice(2, -2)}</strong>
-      : p
-  );
-}
-
-// ── Typing dots ───────────────────────────────────────────────
 function TypingDots() {
   return (
-    <div style={{ ...S.msgRowBot }}>
-      <div style={S.botAvatar}><img src={logo} alt="IR" style={{ width:"22px", height:"22px", objectFit:"contain", borderRadius:"50%" }} /></div>
+    <div style={S.msgRowBot}>
+      <div style={S.botAvatar}>
+        <img src={logo} alt="IR" style={{ width: "22px", height: "22px", objectFit: "contain", borderRadius: "50%" }} />
+      </div>
       <div style={S.typingBubble}>
         {[0, 1, 2].map(i => (
           <div
@@ -465,8 +482,15 @@ function TypingDots() {
   );
 }
 
-// ── Single message ────────────────────────────────────────────
-function Message({ msg }) {
+function Message({ msg, onSuggestionClick, onFeedback }) {
+  const [feedbackGiven, setFeedbackGiven] = useState(false);
+
+  const handleFeedback = (helpful) => {
+    if (feedbackGiven) return;
+    setFeedbackGiven(true);
+    onFeedback(msg.id, helpful);
+  };
+
   if (msg.role === "user") {
     return (
       <div style={S.msgRowUser}>
@@ -475,31 +499,85 @@ function Message({ msg }) {
       </div>
     );
   }
+
   return (
     <div style={S.msgRowBot}>
-      <div style={S.botAvatar}><img src={logo} alt="IR" style={{ width:"22px", height:"22px", objectFit:"contain", borderRadius:"50%" }} /></div>
+      <div style={S.botAvatar}>
+        <img src={logo} alt="IR" style={{ width: "22px", height: "22px", objectFit: "contain", borderRadius: "50%" }} />
+      </div>
       <div style={S.bubbleBot}>
         <BotContent text={msg.text} />
         {msg.sources?.length > 0 && (
           <div style={S.sourcesBar}>
-            <span style={S.sourcesLabel}>SOURCES</span>
+            <span style={S.sourcesLabel}>📚 SOURCES</span>
             {msg.sources.map((s, i) => (
               <span key={i} style={S.sourceChip}>{s}</span>
             ))}
           </div>
         )}
+        {msg.suggestions && msg.suggestions.length > 0 && (
+          <div style={S.suggestionsBlock}>
+            {msg.suggestions.map((s, i) => (
+              <button
+                key={i}
+                style={S.suggestionChipSmall}
+                onClick={() => onSuggestionClick(s)}
+                className="suggestion-chip"
+              >
+                💡 {s}
+              </button>
+            ))}
+          </div>
+        )}
+        <div style={S.feedbackBar}>
+          <span style={{ fontSize: "0.7rem", color: "#8aaccc" }}>Was this helpful?</span>
+          <button
+            style={{ ...S.feedbackBtn, background: feedbackGiven && msg.feedback === true ? "#c8e6d9" : "transparent" }}
+            onClick={() => handleFeedback(true)}
+            disabled={feedbackGiven}
+          >
+            👍 Yes
+          </button>
+          <button
+            style={{ ...S.feedbackBtn, background: feedbackGiven && msg.feedback === false ? "#ffe0e0" : "transparent" }}
+            onClick={() => handleFeedback(false)}
+            disabled={feedbackGiven}
+          >
+            👎 No
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-// ── Main Chat component ───────────────────────────────────────
 export default function RailGPTChat() {
   const [messages, setMessages] = useState([]);
-  const [input, setInput]       = useState("");
-  const [loading, setLoading]   = useState(false);
-  const bottomRef               = useRef(null);
-  const inputRef                = useRef(null);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [health, setHealth] = useState({ status: "checking", cacheSize: 0 });
+  const bottomRef = useRef(null);
+  const inputRef = useRef(null);
+
+  const checkHealth = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/health");
+      if (res.ok) {
+        const data = await res.json();
+        setHealth({ status: "online", cacheSize: data.cacheSize || 0 });
+      } else {
+        setHealth({ status: "offline", cacheSize: 0 });
+      }
+    } catch (err) {
+      setHealth({ status: "offline", cacheSize: 0 });
+    }
+  };
+
+  useEffect(() => {
+    checkHealth();
+    const interval = setInterval(checkHealth, 3600000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -510,30 +588,39 @@ export default function RailGPTChat() {
     if (!q || loading) return;
     setInput("");
 
-    const next = [...messages, { role: "user", text: q }];
+    const userMsg = { role: "user", text: q, id: Date.now() };
+    const next = [...messages, userMsg];
     setMessages(next);
     setLoading(true);
 
     try {
       const res = await fetch("http://localhost:5000/chat", {
-        method:  "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: q }),
       });
+      
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      setMessages([...next, {
-        role:    "bot",
-        text:    data.answer || "No response received.",
+      
+      const botMsg = {
+        role: "bot",
+        text: data.answer || "No response received.",
         sources: data.sources || [],
-      }]);
+        suggestions: data.suggestions || [],
+        id: Date.now() + 1,
+        feedback: null,
+      };
+      setMessages([...next, botMsg]);
     } catch (err) {
+      console.error("Chat error:", err);
       setMessages([...next, {
-        role:    "bot",
-        text:    "Unable to reach the server. Please ensure the backend is running.",
+        role: "bot",
+        text: "Unable to reach the server. Please ensure the backend is running on port 5000.",
         sources: [],
+        suggestions: ["What are the leave rules?", "Explain railway budget", "Tell me about inspection procedures"],
+        id: Date.now() + 1,
+        feedback: null,
       }]);
     } finally {
       setLoading(false);
@@ -541,15 +628,49 @@ export default function RailGPTChat() {
     }
   };
 
-  const handleKey = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+  const handleFeedback = async (messageId, helpful) => {
+    const msgIndex = messages.findIndex(m => m.id === messageId);
+    if (msgIndex === -1) return;
+    
+    const botMsg = messages[msgIndex];
+    const userMsg = messages[msgIndex - 1];
+    
+    if (!userMsg || userMsg.role !== "user") return;
+    
+    try {
+      await fetch("http://localhost:5000/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: userMsg.text,
+          answer: botMsg.text,
+          helpful: helpful,
+          rating: helpful ? 8 : 2,
+          sessionId: Date.now().toString()
+        }),
+      });
+      
+      const updatedMessages = [...messages];
+      updatedMessages[msgIndex].feedback = helpful;
+      setMessages(updatedMessages);
+    } catch (err) {
+      console.error("Feedback failed:", err);
+    }
   };
 
+  const handleSuggestionClick = (suggestionText) => {
+    send(suggestionText);
+  };
 
+  const handleKey = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  };
 
   return (
     <>
-      {/* Keyframe injected once */}
       <style>{`
         @keyframes pulse {
           0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,0.2)}
@@ -560,6 +681,7 @@ export default function RailGPTChat() {
           40%{transform:translateY(-6px);opacity:1}
         }
         .sug-chip:hover{background:#dceaf6!important;border-color:#2563a8!important}
+        .suggestion-chip:hover{background:#e3edf6!important;border-color:#1e4d73!important}
         .send-btn:hover:not(:disabled){transform:scale(1.08)}
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:transparent}
@@ -567,49 +689,49 @@ export default function RailGPTChat() {
       `}</style>
 
       <div style={S.page}>
-
-        {/* ── HEADER CARD ─────────────────────────────────────── */}
         <div style={S.headerCard}>
           <div style={S.headerLeft}>
             <div style={S.logoCircle}>
-              <img src={logo} alt="Indian Railways" style={{ width:"38px", height:"38px", objectFit:"contain", borderRadius:"50%" }} />
+              <img src={logo} alt="Indian Railways" style={{ width: "50px", height: "50px", objectFit: "contain", borderRadius: "50%" }} />
             </div>
             <div>
-              <p style={S.headerTitle}>Rail GPT</p>
+              <p style={S.headerTitle}>Rail. Ai</p>
               <p style={S.headerSub}>Indian Railways AI Assistant</p>
             </div>
           </div>
           <div style={S.headerRight}>
-            <div style={S.statusDot} />
-            <span style={S.statusLabel}>Online</span>
-
+            {/* <button style={S.adminBtn} onClick={() => navigate('/admin')}>
+              🧠 Admin Panel
+            </button> */}
+            <div style={{ ...S.statusDot, background: health.status === "online" ? "#22c55e" : "#ef4444" }} />
+            <span style={{ ...S.statusLabel, color: health.status === "online" ? "#22994a" : "#dc2626" }}>
+              {health.status === "online" ? "Online" : "Offline"}
+              {health.cacheSize > 0 && ` • ${health.cacheSize} cached`}
+            </span>
           </div>
         </div>
 
-        {/* ── CHAT CARD ────────────────────────────────────────── */}
         <div style={S.chatCard}>
-
-          {/* Chat sub-header */}
           <div style={S.chatHeader}>
-            <span style={S.chatHeaderIcon}>💬</span>
-            <div>
-              <p style={S.chatHeaderText}>Ask anything about Indian Railways</p>
-              <p style={S.chatHeaderSub}>Powered by local AI • Your data stays private</p>
-            </div>
+            <p style={S.chatHeaderText}>Ask anything about Indian Railways</p>
           </div>
 
-          {/* Messages */}
           <div style={S.messagesArea}>
             {messages.length === 0 && !loading ? (
               <div style={S.emptyState}>
-                <img src={logo} alt="Indian Railways" style={{ width:"72px", height:"72px", objectFit:"contain", marginBottom:"4px" }} />
-                <h2 style={S.emptyTitle}>Welcome to Rail GPT</h2>
+                <img src={logo} alt="Indian Railways" style={{ width: "72px", height: "72px", objectFit: "contain", marginBottom: "4px" }} />
+                <h2 style={S.emptyTitle}>Welcome to Rail. Ai</h2>
                 <p style={S.emptySub}>
                   Ask questions about railway rules, finance, administration,
-                  and more — powered by your own documents.
+                  and more — powered by autonomous self-improving AI.
                 </p>
                 <div style={S.suggestionsGrid}>
-                  {SUGGESTIONS.map((s, i) => (
+                  {[
+                    "What is the leave policy for railway employees?",
+                    "Railway hours of work and rest rules",
+                    "Overtime rules for railway staff",
+                    "Leave sanction process in railways"
+                  ].map((s, i) => (
                     <button
                       key={i}
                       className="sug-chip"
@@ -623,8 +745,13 @@ export default function RailGPTChat() {
               </div>
             ) : (
               <>
-                {messages.map((msg, i) => (
-                  <Message key={i} msg={msg} />
+                {messages.map((msg) => (
+                  <Message
+                    key={msg.id}
+                    msg={msg}
+                    onSuggestionClick={handleSuggestionClick}
+                    onFeedback={handleFeedback}
+                  />
                 ))}
                 {loading && <TypingDots />}
                 <div ref={bottomRef} />
@@ -632,7 +759,6 @@ export default function RailGPTChat() {
             )}
           </div>
 
-          {/* Input bar */}
           <div style={S.inputBar}>
             <div style={S.inputWrap}>
               <input
@@ -656,12 +782,14 @@ export default function RailGPTChat() {
                 ➤
               </button>
             </div>
-            <p style={S.inputHint}>Press Enter to send · Shift+Enter for new line</p>
+            <p style={S.inputHint}>Press Enter to send • Your feedback helps improve the AI</p>
           </div>
+        </div>
 
-        </div>{/* end chatCard */}
-
-      </div>{/* end page */}
+        <div style={S.footerCard}>
+          <p style={S.footerSub}>Designed and Developed by I T Central Railway, CSMT, Mumbai</p>
+        </div>
+      </div>
     </>
   );
 }

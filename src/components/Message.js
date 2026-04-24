@@ -84,8 +84,8 @@ export default function Message({ msg }) {
     <div className={`message-wrapper ${isUser ? "user-wrapper" : "bot-wrapper"}`}>
       {/* Avatar */}
       {isBot && (
-        <div className="avatar bot-avatar" aria-label="Rail GPT">
-          <image src={logo} alt="Rail GPT"/>
+        <div className="avatar bot-avatar" aria-label="Rail.Ai">
+          <image src={logo} alt="Rail.Ai"/>
         </div>
       )}
 
